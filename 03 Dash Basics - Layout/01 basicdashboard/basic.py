@@ -5,22 +5,28 @@ import dash_html_components as html
 
 app = dash.Dash()
 
-app.layout = html.Div(children = [
-			html.H1("Basic Dashboard"),
+colors = {'background':'#111111', 'text': '#7FDBFF'}
 
-			html.Div("Dash: Dashboard with Python"),
+app.layout = html.Div(children = [
+			html.H1("Basic Dashboard", style={'textAlign': 'center', 
+											  'color':colors['text']}),
 
 			dcc.Graph(id='example', 
 				figure={'data': [
 				{'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
 				
 				{'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': 'NYC'}
-				],
+		 		],
 						'layout':{
+						'plot_bgcolor': colors['background'],
+						'page_color': colors['background'],
+						'font': {'color':colors['text']},
 						'title': 'BAR PLOTS !!!!'
 
 						}})
-	])
+	], style={'backgroundColor': colors['background']}
+	
+	)
 
 
 
