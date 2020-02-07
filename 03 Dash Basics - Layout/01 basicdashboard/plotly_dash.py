@@ -25,3 +25,6 @@ app.layout = html.Div([dcc.Graph(id='scatterplot',
                     }
 
 )])
+
+if __name__ == '__main__':
+    app.run_server()
