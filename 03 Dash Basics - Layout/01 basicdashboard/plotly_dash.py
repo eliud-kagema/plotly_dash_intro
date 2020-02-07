@@ -46,7 +46,7 @@ app.layout = html.Div([dcc.Graph(id='scatterplot',
                                         'line': {'width':2}
                                     }
                                 )],
-                            'layout':go.Layout(title='My scatter plot',
+                            'layout':go.Layout(title='My Second scatter plot',
                                                 xaxis={'title':'X Axis'},
                                                 yaxis={'title':'Y Axis'}
                                                 )}
