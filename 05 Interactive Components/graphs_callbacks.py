@@ -2,7 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-import plotly.graph_objects as objs
+import plotly.graph_objects as go
 import pandas as pd
 
 
@@ -10,14 +10,16 @@ df = pd.read_csv('../data/gapminderDataFiveYear.csv')
 
 app = dash.Dash()
 
+# for drop  down component
 year_options = []
 
 for year in df['year'].unique():
     year_options.append({'label':str(year), 'value': year})
 
+
 app.layout = html.Div([
             dcc.Graph(id='graph'),
-            dcc.Dropdown(id='year-picker', options=yr_options,
+            dcc.Dropdown(id='year-picker', options=year_options,
             
                     value=df['year'].min())
 ])
@@ -26,8 +28,6 @@ app.layout = html.Div([
 @app.callback(Output('graph', 'figure'),
             [Input('year-picker', 'value')]
     )
-
-
 def update_figure(selected_year):
     # Data only for selected year from the drop dwon menu
     filtered_df = df[df['year'] == selected_year ]
@@ -44,7 +44,8 @@ def update_figure(selected_year):
             marker = {'size': 15},
             name = continent_name
         ))
-    return {'data':traces, 'layout': go.Layout(title='GDP Capita DashBoard',
+    return {'data':traces, 
+            'layout': go.Layout(title='GDP Capita DashBoard',
                                                 xaxis = {'title': 'GDP Per Capita', 'type':'log'},
                                                 yaxis = {'title': 'Life Expectancy'}
     )}
