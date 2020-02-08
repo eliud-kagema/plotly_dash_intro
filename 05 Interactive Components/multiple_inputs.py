@@ -42,24 +42,32 @@ app.layout = html.Div([
 
 
 @app.callback(Output('feature-graphic', 'figure'),
-                [Input('xaxis', 'value'),
-                Input('yaxis', 'value')
+                [
+                    Input('xaxis', 'value'),
+                    Input('yaxis', 'value')
                 ]
 )
-def update_graph(x_axis_name, y_axis_name):
-    return {
-            'data': [go.Scatter(
-                                x=df[x_axis_name], 
-                                y=df[y_axis_name], 
-                                text=df['name']
-                                mode='markers',
-                                marker= {'size': 15})
-                                ],
 
-            'layout':go.Layout(title='MPG Dashboard'),
-                                xaxis={'title':x_axis_name},
-                                yaxis={'title':y_axis_name},
-        }
+def update_graph(xaxis_name, yaxis_name):
+    return {
+        'data': [go.Scatter(
+            x=df[xaxis_name],
+            y=df[yaxis_name],
+            text=df['name'],
+            mode='markers',
+            marker={
+                'size': 15,
+                'opacity': 0.5,
+                'line': {'width': 0.5, 'color': 'white'}
+            }
+        )],
+        'layout': go.Layout(
+            xaxis={'title': xaxis_name.title()},
+            yaxis={'title': yaxis_name.title()},
+            margin={'l': 40, 'b': 40, 't': 10, 'r': 0},
+            hovermode='closest'
+        )
+    }
 
 if __name__ == '__main__':
     app.run_server()
