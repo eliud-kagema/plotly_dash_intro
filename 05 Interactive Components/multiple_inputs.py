@@ -39,3 +39,27 @@ app.layout = html.Div([
             dcc.Graph(id='feature-graphic')
 
 ], style={'padding': 10})
+
+
+@app.callback(Output('feature-graphic', 'figure'),
+                [Input('xaxis', 'value'),
+                Input('yaxis', 'value')
+                ]
+)
+def update_graph(x_axis_name, y_axis_name):
+    return {
+            'data': [go.Scatter(
+                                x=df[x_axis_name], 
+                                y=df[y_axis_name], 
+                                text=df['name']
+                                mode='markers',
+                                marker= {'size': 15})
+                                ],
+
+            'layout':go.Layout(title='MPG Dashboard'),
+                                xaxis={'title':x_axis_name},
+                                yaxis={'title':y_axis_name},
+        }
+
+if __name__ == '__main__':
+    app.run_server()
