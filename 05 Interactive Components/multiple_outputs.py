@@ -4,9 +4,14 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.graph_objects as go
 import pandas as pd
-
+import base64
 
 df = df = pd.read_csv('../data/wheels.csv')
+
+def encode_image(image_file):
+    encoded = base64.b64encode(open(image_file, 'rb').read())
+    return 'data:image/png;base64,{}'.format(encoded.decode())
+
 
 app = dash.Dash()
 
@@ -28,6 +33,8 @@ app.layout = html.Div([
             ),
             html.Div(id='colors-output'),
 
+            html.Img(id='display-image', src='children', height=300)
+
 ], style={'fontFamily': 'helvetica', 'fontSize': 15})
 
 
@@ -44,6 +51,14 @@ def callback_a(wheels_value):
 def callback_b(colors_value):
     return "You choose {}".format(colors_value)
 
+
+@app.callback(
+    Output('display-image', 'src'),
+    [Input('wheels', 'value'),
+     Input('colors', 'value')])
+def callback_image(wheel, color):
+    path = '../data/images/'
+    return encode_image(path+df[(df['wheels']==wheel) & (df['color']==color)]['image'].values[0])
 
 if __name__ == '__main__':
     app.run_server()
