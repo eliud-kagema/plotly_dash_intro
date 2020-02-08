@@ -8,7 +8,7 @@ app = dash.Dash()
 
 app.layout = html.Div([
 
-    dcc.Input(id='my_id', value='Initial text', type='text'),
+    dcc.Input(id='my-id', value='Initial text', type='text'),
     html.Div(id='my-div')
 ])
 
