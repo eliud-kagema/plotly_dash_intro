@@ -8,4 +8,34 @@ import pandas as pd
 
 df = pd.read_csv('../data/mpg.csv')
 
-print(df.tail())
+app = dash.Dash()
+
+
+features = df.columns
+# ['mpg', 'cylinders', 'displacement', 'horsepower', 'weight','acceleration', 'model_year', 'origin', 'name']
+     
+
+app.layout = html.Div([
+            # First drop down
+            html.Div([
+                dcc.Dropdown(id='xaxis',
+                    options=[{'label': i, 'value': i} for i in features],
+                    value='displacement'
+                )
+            ], style={'width':'48%', 'display': 'inline-block'}),
+
+
+            # Second drop down
+           html.Div([
+                dcc.Dropdown(id='yaxis',
+                    options=[{'label': i, 'value': i} for i in features],
+                    value='mpg'
+                )
+            ], style={'width':'48%', 'display': 'inline-block'}),
+
+
+
+
+            dcc.Graph(id='feature-graphic')
+
+], style={'padding': 10})
